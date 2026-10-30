@@ -1,0 +1,12 @@
+node_modules
+dist
+dist-ssr
+*.local
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+*.log
+
+# Source/reference material kept out of the repo (large, not used by the site)
+/files for referance/
+*.mov

@@ -1,0 +1,131 @@
+@import 'tailwindcss';
+
+/* Brand fonts — self-hosted variable fonts (see /public/fonts). */
+@font-face {
+  font-family: 'Noto Serif';
+  src: url('/fonts/NotoSerif-Variable.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Noto Serif';
+  src: url('/fonts/NotoSerif-Italic-Variable.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Roboto Flex';
+  src: url('/fonts/RobotoFlex-Variable.ttf') format('truetype-variations');
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =========================================================================
+   AWERTON — design tokens
+   `ink` & `gold` are the exact brand colours (Color 1 / Color 2).
+   Everything else is sampled from the homepage design (Figma, v3).
+   ========================================================================= */
+@theme {
+  /* Brand core */
+  --color-ink: #171515; /* dark surfaces · Color 1 */
+  --color-gold: #bbb399; /* accent / logo · Color 2 */
+
+  /* Light surfaces */
+  --color-cream: #fcfbf6; /* page background        */
+  --color-parchment: #f4f2e9; /* highlighted card        */
+  --color-sparkle: #ebe8dd; /* decorative crystal stars */
+
+  /* Ink & neutrals */
+  --color-charcoal: #0c0e0f; /* headings / body on light */
+  --color-ivory: #edebdd; /* type on dark            */
+  --color-stone: #676257; /* pill buttons            */
+  --color-iron: #4b4b4b; /* line icons              */
+  --color-graphite: #2b2b2b; /* light header & footer type */
+  --color-line: #c5c5c5; /* dividers / icon rings   */
+  --color-sand: #c8c3af; /* card outline            */
+
+  /* Chart */
+  --color-chart-muted: #d8d4c3;
+  --color-chart-grid: #ede9e6;
+  --color-chart-axis: #b6b6b6;
+
+  /* Typography */
+  --font-serif: 'Noto Serif', Georgia, serif; /* headings, labels, buttons */
+  --font-sans: 'Roboto Flex', system-ui, sans-serif; /* body copy               */
+
+  /* Motion */
+  --animate-fade-up: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 1.4s ease-out both;
+  --animate-slow-zoom: slow-zoom 24s ease-in-out infinite alternate;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slow-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Page container: 1440 design width with 60px gutters. */
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1440px;
+  padding-inline: 20px;
+  @media (width >= 48rem) {
+    padding-inline: 40px;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 60px;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream font-sans font-light text-charcoal antialiased;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-ink);
+  }
+}
