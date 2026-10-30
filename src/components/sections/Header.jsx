@@ -7,7 +7,7 @@ import { PillButton } from '../ui'
 export const navLinks = [
   { href: '#how-we-work', label: 'Our services' },
   { href: '#portfolio', label: 'Cases and objects' },
-  { href: '#stories', label: 'Moments' },
+  { href: '#guides', label: 'Guides & tips' },
   { href: '#contacts', label: 'Contacts' },
 ]
 

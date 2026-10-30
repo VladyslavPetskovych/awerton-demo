@@ -30,13 +30,13 @@ const stories = [
 
 export default function Stories() {
   return (
-    <section id="stories" className="relative overflow-hidden">
+    <section id="guides" className="relative overflow-hidden">
       <SparkleShape className="pointer-events-none absolute top-[35px] left-[86%] hidden h-[465px] w-auto text-sparkle/35 lg:block" />
       <SparkleShape className="pointer-events-none absolute top-[1044px] -left-[55px] hidden h-[329px] w-auto text-sparkle/35 lg:block" />
 
       <div className="container-page relative pt-16 pb-16 lg:pb-[67px]">
         <header className="mx-auto max-w-[1100px] text-center">
-          <Eyebrow>The highlights</Eyebrow>
+          <Eyebrow>Guides &amp; tips</Eyebrow>
           <SectionTitle className="mt-2">Stories that shape the way we create.</SectionTitle>
           <p className="mx-auto mt-[35px] max-w-[765px] text-base leading-[1.375] opacity-85">
             We believe successful projects begin with a clear strategy and continue with attention to
