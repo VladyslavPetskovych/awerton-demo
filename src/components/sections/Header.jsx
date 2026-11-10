@@ -40,9 +40,30 @@ function useScrolled(threshold) {
   return scrolled
 }
 
+// Mobile & tablet only — matches Tailwind's `lg` breakpoint (desktop keeps the static header).
+const COMPACT_QUERY = '(max-width: 1023.98px)'
+
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(() => window.matchMedia(query).matches)
+
+  useEffect(() => {
+    const mql = window.matchMedia(query)
+    const onChange = () => setMatches(mql.matches)
+    onChange()
+    mql.addEventListener('change', onChange)
+    return () => mql.removeEventListener('change', onChange)
+  }, [query])
+
+  return matches
+}
+
 export default function Header() {
   const [open, setOpen] = useState(false)
-  const scrolled = useScrolled(COLLAPSE_AT)
+  const isCompactViewport = useMediaQuery(COMPACT_QUERY)
+  const pastTop = useScrolled(COLLAPSE_AT)
+  // Mobile/tablet: collapse into the corner dock. Desktop: keep the full bar on a frosted backdrop.
+  const scrolled = pastTop && isCompactViewport
+  const frosted = pastTop && !isCompactViewport
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
@@ -63,7 +84,16 @@ export default function Header() {
   return (
     // The header itself ignores pointer events so the empty, transparent area never blocks the page;
     // interactive children opt back in.
+    // Always fixed. Mobile/tablet collapse into the corner dock; desktop gains a frosted backdrop.
     <header className="pointer-events-none fixed inset-x-0 top-0 z-30 animate-fade-in text-ivory">
+      {/* Frosted backdrop (desktop). Kept on its own layer: backdrop-filter on <header> itself would
+          trap the fixed full-screen menu inside the header box. */}
+      <div
+        aria-hidden="true"
+        className={`absolute inset-0 -z-10 bg-ink/45 backdrop-blur-xl backdrop-saturate-150 transition-opacity duration-700 ${EASE} ${
+          frosted ? 'pointer-events-auto opacity-100' : 'opacity-0'
+        }`}
+      />
       <div className="container-page">
         {/* 3-column grid keeps the logo centred while guaranteeing it never overlaps the side controls. */}
         <div className="grid h-[76px] grid-cols-[1fr_auto_1fr] items-center gap-2">
@@ -144,7 +174,7 @@ export default function Header() {
         <nav
           aria-label="Primary"
           inert={scrolled}
-          className={`hidden justify-center gap-[33px] pt-[15px] md:flex ${fade('delay-0', 'delay-150')}`}
+          className={`hidden justify-center gap-[33px] pt-[15px] pb-[15px] md:flex ${fade('delay-0', 'delay-150')}`}
         >
           {navLinks.map((link) => (
             <a
