@@ -9,20 +9,38 @@ import Stories from './components/sections/Stories'
 import Portfolio from './components/sections/Portfolio'
 import Request from './components/sections/Request'
 import Footer from './components/sections/Footer'
+import ServicesPage from './pages/ServicesPage'
+
+function HomePage() {
+  return (
+    <>
+      <Hero />
+      <Philosophy />
+      <HowWeWork />
+      <Portfolio />
+      <Request />
+      <Stories />
+      <Strategy />
+      {/* <Investment /> */}
+    </>
+  )
+}
+
+// Tiny path-based router: each page is a real URL (Netlify rewrites it to index.html).
+const routes = {
+  '/': HomePage,
+  '/services': ServicesPage,
+}
 
 export default function App() {
+  const path = window.location.pathname.replace(/\/+$/, '') || '/'
+  const Page = routes[path] ?? HomePage
+
   return (
     <>
       <Header />
       <main>
-        <Hero />
-        <Philosophy />
-        <HowWeWork />
-        <Portfolio />
-        <Request />
-        <Stories />
-        <Strategy />
-        {/* <Investment /> */}
+        <Page />
       </main>
       <Footer />
     </>

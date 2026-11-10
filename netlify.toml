@@ -27,3 +27,9 @@
   for = "/fonts/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Client-side pages: serve the SPA shell for /services.
+[[redirects]]
+  from = "/services"
+  to = "/index.html"
+  status = 200

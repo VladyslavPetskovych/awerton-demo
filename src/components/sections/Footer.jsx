@@ -2,12 +2,16 @@ import { useState } from 'react'
 import AwertonMark from '../brand/AwertonMark'
 import AwertonWordmark from '../brand/AwertonWordmark'
 import { ArrowRightIcon, FacebookIcon, InstagramIcon, XIcon } from '../icons'
-import { EMAIL, PHONE_DISPLAY, PHONE_HREF } from '../../siteConfig'
+import { EMAIL, PHONE_DISPLAY, PHONE_HREF, REQUEST_ENDPOINT } from '../../siteConfig'
+import { navLinks } from './Header'
+
+const link = (label, href = '#') => ({ label, href })
 
 const columns = [
-  { title: 'Info', links: ['Terms & Conditions', 'Privacy Policy', 'Cookies Info'] },
-  { title: 'Main', links: ['Apartments', 'Our services', 'Jardin Restaurant', 'SPA Space'] },
-  { title: 'Other', links: ['Contacts', 'Rules', 'Blog'] },
+  { title: 'Info', links: [link('Terms & Conditions'), link('Privacy Policy'), link('Cookies Info')] },
+  // Main mirrors the header navigation, plus the restaurant.
+  { title: 'Main', links: [...navLinks, link('Aristo Restaurant')] },
+  { title: 'Other', links: [link('Rules'), link('Blog')] },
 ]
 
 const socials = [
@@ -16,35 +20,51 @@ const socials = [
   { label: 'X', icon: XIcon, href: '#' },
 ]
 
-function Newsletter() {
+function ConsultationSignup() {
   const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState('idle') // idle | sending | sent | error
 
-  function handleSubmit(e) {
+  // Free-consultation leads go to the same inbox as callback requests.
+  async function handleSubmit(e) {
     e.preventDefault()
     if (!email) return
-    // No backend yet — wire this to your provider (Mailchimp, Resend, etc.).
-    setSubmitted(true)
+    setStatus('sending')
+    try {
+      const res = await fetch(REQUEST_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          email,
+          _subject: 'Free consultation request — awerton.com',
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      })
+      const json = await res.json().catch(() => ({}))
+      setStatus(res.ok && String(json.success) !== 'false' ? 'sent' : 'error')
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
     <div className="max-w-[372px]">
-      <h3 className="font-serif text-lg font-medium uppercase">Subscribe our newsletters</h3>
+      <h3 className="font-serif text-lg font-medium uppercase">Get a free consultation</h3>
       <p className="mt-6 text-base leading-[1.3] text-graphite/70">
-        Join our newsletter to receive 10% off your first purchase while gaining access to insights
-        on the latest launches, deals, and seasonal updates.
+        Leave your email and our property management team will contact you to arrange a free
+        consultation on your property or investment.
       </p>
-      {submitted ? (
+      {status === 'sent' ? (
         <p role="status" className="mt-9 border-b border-graphite/40 pb-4 font-serif text-base text-stone">
-          Thank you — you're on the list.
+          Thank you — our team will contact you shortly to arrange your consultation.
         </p>
       ) : (
         <form onSubmit={handleSubmit} className="mt-9 flex items-center border-b border-graphite/40 pb-4 transition-colors focus-within:border-stone">
-          <label htmlFor="newsletter-email" className="sr-only">
+          <label htmlFor="consult-email" className="sr-only">
             Email address
           </label>
           <input
-            id="newsletter-email"
+            id="consult-email"
             type="email"
             required
             value={email}
@@ -54,12 +74,22 @@ function Newsletter() {
           />
           <button
             type="submit"
-            className="group flex items-center gap-2.5 font-serif text-base font-medium uppercase transition hover:text-stone"
+            disabled={status === 'sending'}
+            className="group flex items-center gap-2.5 font-serif text-base font-medium uppercase transition hover:text-stone disabled:opacity-50"
           >
-            Join
+            {status === 'sending' ? 'Sending' : 'Send'}
             <ArrowRightIcon className="h-3.5 w-[18px] transition-transform group-hover:translate-x-1" />
           </button>
         </form>
+      )}
+      {status === 'error' && (
+        <p role="alert" className="mt-3 text-sm text-graphite/70">
+          Something went wrong. Please try again or email us at{' '}
+          <a href={`mailto:${EMAIL}`} className="underline underline-offset-2">
+            {EMAIL}
+          </a>
+          .
+        </p>
       )}
     </div>
   )
@@ -107,10 +137,10 @@ export default function Footer() {
             <nav key={col.title} aria-label={col.title}>
               <h3 className="font-serif text-lg font-medium uppercase">{col.title}</h3>
               <ul className="mt-[22px] space-y-[9px]">
-                {col.links.map((link) => (
-                  <li key={link}>
-                    <a href="#" className="font-sans text-base font-light text-graphite/80 transition hover:text-stone">
-                      {link}
+                {col.links.map(({ label, href }) => (
+                  <li key={label}>
+                    <a href={href} className="font-sans text-base font-light text-graphite/80 transition hover:text-stone">
+                      {label}
                     </a>
                   </li>
                 ))}
@@ -118,7 +148,7 @@ export default function Footer() {
             </nav>
           ))}
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
-            <Newsletter />
+            <ConsultationSignup />
           </div>
         </div>
 
