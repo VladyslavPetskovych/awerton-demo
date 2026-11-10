@@ -102,21 +102,37 @@ function Investing() {
 }
 
 const services = [
-  'Investment Consultation',
-  'Property Selection & Analysis',
-  'Acquisition & Legal Support',
-  'Property & Asset Management',
+  {
+    title: 'Real Estate Asset Management',
+    text: 'Day-to-day operations, maintenance, staff and transparent financial reporting — your property runs to clear standards.',
+  },
+  {
+    title: 'Brand Creation',
+    text: 'A distinctive name, visual identity and positioning that set your property apart in the market.',
+  },
+  {
+    title: 'Website Development',
+    text: 'A beautiful, fast website with direct booking that showcases your property and turns visitors into guests.',
+  },
+  {
+    title: 'Rental to Our Clients',
+    text: 'We place your property with our network of vetted tenants and guests, keeping occupancy and income high.',
+  },
+  {
+    title: 'Investment & Acquisition Support',
+    text: 'Consultation, property selection, analysis and legal support at every step of a purchase.',
+  },
 ]
 
 function OurServices() {
   return (
     <section id="services" className="bg-[#0f1111] text-parchment">
       <div className="mx-auto flex max-w-[1440px] flex-col lg:grid lg:grid-cols-[582fr_628fr] lg:gap-x-[110px] lg:px-10 lg:pt-[60px] lg:pb-[80px] xl:px-[60px]">
-        <div className="order-2 mt-[43px] lg:order-none lg:mt-0">
+        <div className="order-2 mt-[43px] lg:order-none lg:mt-0 lg:h-full">
           <img
             src="/images/services-tower.webp"
             alt="Curved high-rise residential tower with copper-toned balconies"
-            className="aspect-[430/498] w-full object-cover object-center md:aspect-[16/11] lg:aspect-[582/673]"
+            className="aspect-[430/498] w-full object-cover object-center md:aspect-[16/11] lg:aspect-auto lg:h-full lg:min-h-[673px]"
             loading="lazy"
           />
         </div>
@@ -125,24 +141,30 @@ function OurServices() {
           <div>
             <p className={`${eyebrow} text-parchment/85`}>Services</p>
             <h2 className={`${h2} mt-[7px] text-parchment/85 lg:mt-2`}>Our services</h2>
-            <p className={`${body} mt-[18px] max-w-[420px] text-parchment/85 lg:mt-[26px]`}>
-              We guide investors through every stage — from the first consultation to
-              acquisition and long-term management.
+            <p className={`${body} mt-[18px] max-w-[460px] text-parchment/85 lg:mt-[26px]`}>
+              We take care of everything that makes your property perform — from managing the
+              asset and building its brand to launching its website and filling it with our
+              clients. You own it; we make it work.
             </p>
           </div>
 
           <ol className="mt-[26px] divide-y divide-[#434343] lg:mt-12">
-            {services.map((title, i) => (
+            {services.map(({ title, text }, i) => (
               <li
                 key={title}
-                className="group flex items-center gap-6 py-[11px] first:pt-0 last:pb-0 lg:py-[15px]"
+                className="group flex items-center gap-6 py-[14px] first:pt-0 last:pb-0 lg:py-[18px]"
               >
                 <span className="flex size-[66px] shrink-0 items-center justify-center rounded-full border border-line font-serif text-2xl text-parchment/85 transition-colors duration-300 group-hover:border-gold group-hover:text-gold lg:size-[78px] lg:text-[28px]">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <h3 className="font-serif text-lg leading-[25px] font-medium uppercase transition-colors duration-300 group-hover:text-gold lg:text-xl lg:leading-normal">
-                  {title}
-                </h3>
+                <div>
+                  <h3 className="font-serif text-lg leading-[25px] font-medium uppercase transition-colors duration-300 group-hover:text-gold lg:text-xl lg:leading-normal">
+                    {title}
+                  </h3>
+                  <p className="mt-1 max-w-[440px] font-sans text-sm leading-5 font-light text-parchment/60">
+                    {text}
+                  </p>
+                </div>
               </li>
             ))}
           </ol>
