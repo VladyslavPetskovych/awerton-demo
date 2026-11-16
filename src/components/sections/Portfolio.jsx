@@ -7,7 +7,7 @@ import { PillButton, SectionTitle } from '../ui'
  * On a property page pass `exclude` (its slug) to show only the other properties.
  */
 export default function Portfolio({ exclude }) {
-  const { t } = useI18n()
+  const { t, href } = useI18n()
   const items = exclude ? properties.filter((p) => p.slug !== exclude) : properties
   const two = items.length === 2
 
@@ -21,7 +21,7 @@ export default function Portfolio({ exclude }) {
           </p>
         </div>
         <PillButton
-          href={exclude ? '/#portfolio' : propertyHref(items[0].slug)}
+          href={href(exclude ? '/#portfolio' : propertyHref(items[0].slug))}
           className="self-start md:self-center"
         >
           {t.portfolio.button}
@@ -36,7 +36,7 @@ export default function Portfolio({ exclude }) {
         {items.map((p) => (
           <a
             key={p.slug}
-            href={propertyHref(p.slug)}
+            href={href(propertyHref(p.slug))}
             aria-label={`${p.name} — ${t.portfolio.open}`}
             className={`group relative block overflow-hidden rounded-md ${
               two ? 'aspect-[464/639] sm:aspect-[708/560]' : 'aspect-[464/639]'

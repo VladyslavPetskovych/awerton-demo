@@ -98,7 +98,7 @@ function ConsultationSignup() {
 }
 
 export default function Footer() {
-  const { t } = useI18n()
+  const { t, href: localize } = useI18n()
   const label = (key) => t.footer.links[key] ?? t.nav[key]
 
   return (
@@ -144,7 +144,7 @@ export default function Footer() {
               <ul className="mt-[22px] space-y-[9px]">
                 {col.links.map(({ key, href }) => (
                   <li key={key}>
-                    <a href={href} className="font-sans text-base font-light text-graphite/80 transition hover:text-stone">
+                    <a href={localize(href)} className="font-sans text-base font-light text-graphite/80 transition hover:text-stone">
                       {label(key)}
                     </a>
                   </li>

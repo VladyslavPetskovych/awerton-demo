@@ -1,9 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<!--
+  Every page exists twice: Ukrainian at the root and English under /en.
+  Each <url> lists both versions as hreflang alternates.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://awerton.com/</loc>
-    <lastmod>2026-06-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://awerton.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://awerton.com/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://awerton.com/" />
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://awerton.com/en</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://awerton.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://awerton.com/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://awerton.com/" />
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://awerton.com/services</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://awerton.com/services" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://awerton.com/en/services" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://awerton.com/services" />
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://awerton.com/en/services</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://awerton.com/services" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://awerton.com/en/services" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://awerton.com/services" />
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://awerton.com/guides</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://awerton.com/guides" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://awerton.com/en/guides" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://awerton.com/guides" />
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://awerton.com/en/guides</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://awerton.com/guides" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://awerton.com/en/guides" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://awerton.com/guides" />
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://awerton.com/portfolio/aristo</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://awerton.com/portfolio/aristo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://awerton.com/en/portfolio/aristo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://awerton.com/portfolio/aristo" />
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://awerton.com/en/portfolio/aristo</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://awerton.com/portfolio/aristo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://awerton.com/en/portfolio/aristo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://awerton.com/portfolio/aristo" />
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://awerton.com/portfolio/prime-rest</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://awerton.com/portfolio/prime-rest" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://awerton.com/en/portfolio/prime-rest" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://awerton.com/portfolio/prime-rest" />
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://awerton.com/en/portfolio/prime-rest</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://awerton.com/portfolio/prime-rest" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://awerton.com/en/portfolio/prime-rest" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://awerton.com/portfolio/prime-rest" />
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://awerton.com/portfolio/royal-apart</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://awerton.com/portfolio/royal-apart" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://awerton.com/en/portfolio/royal-apart" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://awerton.com/portfolio/royal-apart" />
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://awerton.com/en/portfolio/royal-apart</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://awerton.com/portfolio/royal-apart" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://awerton.com/en/portfolio/royal-apart" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://awerton.com/portfolio/royal-apart" />
+    <priority>0.7</priority>
   </url>
 </urlset>

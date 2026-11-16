@@ -44,3 +44,14 @@
   from = "/portfolio/*"
   to = "/index.html"
   status = 200
+
+# English versions of every page: /en, /en/services, /en/guides, /en/portfolio/<slug>.
+[[redirects]]
+  from = "/en"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/en/*"
+  to = "/index.html"
+  status = 200

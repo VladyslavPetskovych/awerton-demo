@@ -27,7 +27,7 @@ const EASE = 'ease-[cubic-bezier(0.22,1,0.36,1)]'
 /* ------------------------------------------------------------------ hero */
 
 function PropertyHero({ property, text }) {
-  const { t } = useI18n()
+  const { t, href } = useI18n()
   const labels = t.property.facts
   const facts = [
     [labels.location, t.property.city],
@@ -50,7 +50,7 @@ function PropertyHero({ property, text }) {
 
       <div className={`${container} relative flex flex-1 flex-col pt-[100px] md:pt-[150px] lg:pt-[160px]`}>
         <nav aria-label={t.property.breadcrumb} className="font-sans text-sm leading-none font-light text-ivory/70 uppercase">
-          <a href="/#portfolio" className="transition-colors hover:text-gold">
+          <a href={href('/#portfolio')} className="transition-colors hover:text-gold">
             {t.property.breadcrumb}
           </a>
           <span aria-hidden="true" className="mx-2.5">/</span>

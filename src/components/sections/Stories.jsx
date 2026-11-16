@@ -22,7 +22,7 @@ const layout = [
 ]
 
 export default function Stories() {
-  const { t } = useI18n()
+  const { t, href } = useI18n()
   const stories = layout.map((card, i) => ({ ...card, ...t.stories.items[i] }))
 
   return (
@@ -42,7 +42,7 @@ export default function Stories() {
         <div className="mt-12 grid items-start gap-12 md:grid-cols-3 md:gap-[18px] lg:mt-[47px] lg:grid-cols-[347fr_479fr_458fr]">
           {stories.map((story) => (
             <article key={story.image} className={story.offset}>
-              <a href="/guides" className="group block overflow-hidden rounded-md">
+              <a href={href('/guides')} className="group block overflow-hidden rounded-md">
                 <img
                   src={story.image}
                   alt={story.alt}
@@ -54,7 +54,7 @@ export default function Stories() {
                 {story.title}
               </h3>
               <p className="mt-3 text-base leading-[1.375] opacity-85">{story.text}</p>
-              <ReadMore href="/guides" className="mt-6" />
+              <ReadMore href={href('/guides')} className="mt-6" />
             </article>
           ))}
         </div>

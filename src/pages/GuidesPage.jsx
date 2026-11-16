@@ -252,12 +252,12 @@ function Block({ block, labels, properties }) {
 }
 
 function ArticleFooter({ slug }) {
-  const { t } = useI18n()
+  const { t, href } = useI18n()
   const [copied, setCopied] = useState(false)
 
   async function copyLink() {
     try {
-      await navigator.clipboard.writeText(`${window.location.origin}/guides#${slug}`)
+      await navigator.clipboard.writeText(`${window.location.origin}${href('/guides')}#${slug}`)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {

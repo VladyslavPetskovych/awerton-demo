@@ -126,7 +126,7 @@ function LanguageSwitcher() {
 }
 
 export default function Header() {
-  const { lang, setLang, t } = useI18n()
+  const { lang, setLang, t, href } = useI18n()
   const [open, setOpen] = useState(false)
   const isCompactViewport = useMediaQuery(COMPACT_QUERY)
   const pastTop = useScrolled(COLLAPSE_AT)
@@ -194,7 +194,7 @@ export default function Header() {
             </button>
 
             <a
-              href="/"
+              href={href('/')}
               aria-label={t.header.home}
               inert={!scrolled}
               className={`group flex items-center overflow-hidden transition-[width,margin,opacity] duration-700 ${EASE} ${
@@ -210,7 +210,7 @@ export default function Header() {
             </a>
           </div>
 
-          <a href="/" aria-label={t.header.home} inert={scrolled} className={fade('delay-150', 'delay-0')}>
+          <a href={href('/')} aria-label={t.header.home} inert={scrolled} className={fade('delay-150', 'delay-0')}>
             <AwertonWordmark className="h-auto w-[96px] text-ivory min-[400px]:w-[112px] sm:w-[150px]" />
           </a>
 
@@ -243,7 +243,7 @@ export default function Header() {
           {navLinks.map((link) => (
             <a
               key={link.href}
-              href={link.href}
+              href={href(link.href)}
               className="font-sans text-base font-light uppercase transition hover:text-gold"
             >
               {t.nav[link.key]}
@@ -278,7 +278,7 @@ export default function Header() {
           {navLinks.map((link) => (
             <a
               key={link.href}
-              href={link.href}
+              href={href(link.href)}
               onClick={() => setOpen(false)}
               className="px-5 text-center font-serif text-3xl uppercase text-ivory transition hover:text-gold md:text-5xl"
             >
