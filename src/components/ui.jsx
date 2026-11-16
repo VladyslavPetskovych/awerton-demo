@@ -48,7 +48,8 @@ export function PillButton({ href, tone = 'stone', className = '', children, ...
     <Tag
       href={href}
       type={href ? undefined : 'button'}
-      className={`inline-flex h-[46px] shrink-0 items-center justify-center rounded-full px-4 font-serif text-base font-medium uppercase transition active:scale-[0.98] ${pillTones[tone]} ${className}`}
+      data-reveal=""
+      className={`inline-flex h-[46px] shrink-0 items-center justify-center rounded-full px-4 font-serif text-base font-medium uppercase transition duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:shadow-[0_10px_24px_-12px_rgba(0,0,0,0.45)] active:translate-y-0 active:scale-[0.98] ${pillTones[tone]} ${className}`}
       {...props}
     >
       {children}

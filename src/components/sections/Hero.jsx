@@ -6,6 +6,7 @@ export default function Hero() {
   return (
     <section id="top" className="relative h-[100svh] max-h-[800px] min-h-[600px] overflow-hidden bg-ink text-ivory">
       <video
+        data-parallax="80"
         className="absolute inset-0 h-full w-full origin-center animate-slow-zoom object-cover"
         autoPlay
         muted

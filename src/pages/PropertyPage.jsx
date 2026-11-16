@@ -42,6 +42,7 @@ function PropertyHero({ property, text }) {
         {...hd(property.hero)}
         sizes="100vw"
         alt={text.hero.imageAlt}
+        data-parallax="90"
         className="absolute inset-0 h-full w-full animate-slow-zoom object-cover object-center"
         fetchPriority="high"
       />
@@ -153,6 +154,7 @@ function Approach({ property, text }) {
       <div className="relative h-[min(48vh,440px)] min-h-[300px] overflow-hidden lg:h-[min(62vh,640px)]">
         <img
           {...hd(property.approach)}
+          data-parallax="70"
           sizes="100vw"
           alt={copy.imageAlt}
           className="absolute inset-0 h-full w-full object-cover object-center"

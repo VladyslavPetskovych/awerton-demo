@@ -93,10 +93,20 @@ export function LanguageProvider({ children }) {
   // is the same component, so only the address and the texts change (scroll is kept).
   const setLang = useCallback((code) => {
     if (!isSupported(code)) return
-    const { path } = parseLocation()
-    const { search, hash } = window.location
-    history.pushState(history.state, '', localizePath(path, code) + search + hash)
-    setLangState(code)
+    const apply = () => {
+      const { path } = parseLocation()
+      const { search, hash } = window.location
+      history.pushState(history.state, '', localizePath(path, code) + search + hash)
+      setLangState(code)
+    }
+    // With motion on, the page crossfades: fade out, swap the texts, fade back in (.is-switching).
+    const root = document.documentElement
+    if (!root.classList.contains('motion')) return apply()
+    root.classList.add('is-switching')
+    setTimeout(() => {
+      apply()
+      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('is-switching')))
+    }, 280)
   }, [])
 
   // Back/forward between the two language versions of a page.

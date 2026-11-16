@@ -43,6 +43,7 @@ function ServicesHero() {
         <div className="relative mt-[46px] aspect-[430/455] overflow-hidden md:aspect-[16/11] lg:mt-0 lg:aspect-auto">
           <img
             src="/images/services-hero.webp"
+            data-parallax="60"
             alt={copy.imageAlt}
             className="absolute inset-0 h-full w-full animate-fade-in object-cover object-center"
             fetchPriority="high"

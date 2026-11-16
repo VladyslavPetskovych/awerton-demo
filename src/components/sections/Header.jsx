@@ -244,7 +244,7 @@ export default function Header() {
             <a
               key={link.href}
               href={href(link.href)}
-              className="font-sans text-base font-light uppercase transition hover:text-gold"
+              className="relative font-sans text-base font-light uppercase transition hover:text-gold after:absolute after:inset-x-0 after:-bottom-1.5 after:h-px after:origin-center after:scale-x-0 after:bg-current after:transition-transform after:duration-500 after:ease-[cubic-bezier(0.22,1,0.36,1)] hover:after:scale-x-100"
             >
               {t.nav[link.key]}
             </a>

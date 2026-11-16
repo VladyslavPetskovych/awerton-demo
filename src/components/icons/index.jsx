@@ -1,4 +1,5 @@
 // Icons traced from the AWERTON Figma design (homepage v3). All use currentColor.
+import { useState } from 'react'
 
 export function MenuIcon(props) {
   return (
@@ -117,9 +118,25 @@ export function XIcon(props) {
   )
 }
 
-export function SparkleShape(props) {
+/**
+ * The brand's four-point sparkle. Decorative ones (absolutely positioned) drift slowly, each
+ * with its own speed and start time so they never move in step (see .sparkle-drift).
+ */
+export function SparkleShape({ className = '', style, ...props }) {
+  const [drift] = useState(() => ({
+    '--drift-duration': `${14 + Math.random() * 10}s`,
+    '--drift-delay': `${-Math.random() * 20}s`,
+  }))
+  const decorative = className.includes('absolute')
   return (
-    <svg viewBox="0 0 321.0 504.0" fill="currentColor" aria-hidden="true" {...props}>
+    <svg
+      viewBox="0 0 321.0 504.0"
+      fill="currentColor"
+      aria-hidden="true"
+      className={decorative ? `${className} sparkle-drift` : className}
+      style={decorative ? { ...drift, ...style } : style}
+      {...props}
+    >
       <path d="M321 252.3C298.92 252.3 277.64 258.76 258.17 271.26C238.69 283.97 221.43 301.71 206.77 324.91C192.12 348.1 180.68 374.72 172.44 405.18C164.21 435.63 160.4 468.71 160.4 504C160.4 468.5 156.38 435.63 148.35 405.18C140.12 374.72 128.68 348.1 113.83 324.91C98.97 302.12 81.91 284.17 62.43 271.26C42.96 258.76 22.08 252.3 0 252.3C22.28 252.3 43.16 245.85 62.43 232.94C81.91 219.83 98.77 202.08 113.83 179.5C128.68 156.71 140.32 130.29 148.35 99.23C156.59 68.57 160.4 35.5 160.4 0C160.4 35.5 164.41 68.57 172.44 99.23C180.68 129.88 191.92 156.71 206.77 179.5C221.43 202.08 238.69 220.03 258.17 232.94C277.64 246.05 298.72 252.3 321 252.3" />
     </svg>
   )

@@ -14,6 +14,7 @@ import GuidesPage from './pages/GuidesPage'
 import PropertyPage from './pages/PropertyPage'
 import { propertyBySlug } from './content/portfolio'
 import { parseLocation, useDocumentTitle, useI18n } from './i18n'
+import { useOrganicMotion } from './motion'
 
 function HomePage() {
   const { t } = useI18n()
@@ -46,6 +47,7 @@ export default function App() {
   // /portfolio/<slug> → that property's page (unknown slugs fall back to the home page).
   const property = propertyBySlug(path.match(/^\/portfolio\/([^/]+)$/)?.[1])
   const Page = routes[path] ?? HomePage
+  useOrganicMotion()
 
   return (
     <>
