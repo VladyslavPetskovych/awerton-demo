@@ -3,15 +3,17 @@ import AwertonMark from '../brand/AwertonMark'
 import AwertonWordmark from '../brand/AwertonWordmark'
 import { ArrowRightIcon, FacebookIcon, InstagramIcon, XIcon } from '../icons'
 import { EMAIL, PHONE_DISPLAY, PHONE_HREF, REQUEST_ENDPOINT } from '../../siteConfig'
+import { useI18n } from '../../i18n'
 import { navLinks } from './Header'
 
-const link = (label, href = '#') => ({ label, href })
+// Labels come from t.footer.links / t.nav.
+const link = (key, href = '#') => ({ key, href })
 
 const columns = [
-  { title: 'Info', links: [link('Terms & Conditions'), link('Privacy Policy'), link('Cookies Info')] },
+  { key: 'info', links: [link('terms'), link('privacy'), link('cookies')] },
   // Main mirrors the header navigation, plus the restaurant.
-  { title: 'Main', links: [...navLinks, link('Aristo Restaurant')] },
-  { title: 'Other', links: [link('Rules'), link('Blog')] },
+  { key: 'main', links: [...navLinks, link('restaurant')] },
+  { key: 'other', links: [link('rules'), link('blog')] },
 ]
 
 const socials = [
@@ -21,6 +23,7 @@ const socials = [
 ]
 
 function ConsultationSignup() {
+  const { t } = useI18n()
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
 
@@ -49,19 +52,18 @@ function ConsultationSignup() {
 
   return (
     <div className="max-w-[372px]">
-      <h3 className="font-serif text-lg font-medium uppercase">Get a free consultation</h3>
+      <h3 className="font-serif text-lg font-medium uppercase">{t.footer.consultTitle}</h3>
       <p className="mt-6 text-base leading-[1.3] text-graphite/70">
-        Leave your email and our property management team will contact you to arrange a free
-        consultation on your property or investment.
+        {t.footer.consultText}
       </p>
       {status === 'sent' ? (
         <p role="status" className="mt-9 border-b border-graphite/40 pb-4 font-serif text-base text-stone">
-          Thank you — our team will contact you shortly to arrange your consultation.
+          {t.footer.consultThanks}
         </p>
       ) : (
         <form onSubmit={handleSubmit} className="mt-9 flex items-center border-b border-graphite/40 pb-4 transition-colors focus-within:border-stone">
           <label htmlFor="consult-email" className="sr-only">
-            Email address
+            {t.common.emailLabel}
           </label>
           <input
             id="consult-email"
@@ -69,7 +71,7 @@ function ConsultationSignup() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your Email"
+            placeholder={t.common.emailPlaceholder}
             className="min-w-0 flex-1 bg-transparent font-sans text-base font-light text-graphite outline-none placeholder:text-graphite/60"
           />
           <button
@@ -77,14 +79,14 @@ function ConsultationSignup() {
             disabled={status === 'sending'}
             className="group flex items-center gap-2.5 font-serif text-base font-medium uppercase transition hover:text-stone disabled:opacity-50"
           >
-            {status === 'sending' ? 'Sending' : 'Send'}
+            {status === 'sending' ? t.common.sending : t.footer.send}
             <ArrowRightIcon className="h-3.5 w-[18px] transition-transform group-hover:translate-x-1" />
           </button>
         </form>
       )}
       {status === 'error' && (
         <p role="alert" className="mt-3 text-sm text-graphite/70">
-          Something went wrong. Please try again or email us at{' '}
+          {t.common.errorRetry}{' '}
           <a href={`mailto:${EMAIL}`} className="underline underline-offset-2">
             {EMAIL}
           </a>
@@ -96,6 +98,9 @@ function ConsultationSignup() {
 }
 
 export default function Footer() {
+  const { t } = useI18n()
+  const label = (key) => t.footer.links[key] ?? t.nav[key]
+
   return (
     <footer id="contacts" className="relative overflow-hidden bg-parchment text-graphite">
       {/* Same city sketch as the dark version, inked dark for the light ground. */}
@@ -114,7 +119,7 @@ export default function Footer() {
           <div>
             <AwertonWordmark className="h-auto w-[176px] text-graphite" />
             <p className="mt-5 font-serif text-base text-graphite/80">
-              Management you can trust. Results you can feel.
+              {t.tagline}
             </p>
           </div>
           <ul className="flex gap-[11px]">
@@ -134,13 +139,13 @@ export default function Footer() {
 
         <div className="mt-[51px] grid grid-cols-2 gap-10 md:grid-cols-[260px_260px_1fr] lg:grid-cols-[260px_260px_1fr_372px]">
           {columns.map((col) => (
-            <nav key={col.title} aria-label={col.title}>
-              <h3 className="font-serif text-lg font-medium uppercase">{col.title}</h3>
+            <nav key={col.key} aria-label={t.footer.columns[col.key]}>
+              <h3 className="font-serif text-lg font-medium uppercase">{t.footer.columns[col.key]}</h3>
               <ul className="mt-[22px] space-y-[9px]">
-                {col.links.map(({ label, href }) => (
-                  <li key={label}>
+                {col.links.map(({ key, href }) => (
+                  <li key={key}>
                     <a href={href} className="font-sans text-base font-light text-graphite/80 transition hover:text-stone">
-                      {label}
+                      {label(key)}
                     </a>
                   </li>
                 ))}
@@ -158,7 +163,7 @@ export default function Footer() {
 
         <div className="mt-[70px] grid gap-6 border-t border-graphite/15 pt-6 text-center sm:grid-cols-3 sm:items-end sm:text-left">
           <div>
-            <p className="font-sans text-sm font-normal">Email</p>
+            <p className="font-sans text-sm font-normal">{t.footer.email}</p>
             <a
               href={`mailto:${EMAIL}`}
               className="mt-1 block font-sans text-base font-light text-graphite/70 transition hover:text-stone"
@@ -167,10 +172,10 @@ export default function Footer() {
             </a>
           </div>
           <p className="order-last font-sans text-sm font-light text-graphite/60 sm:order-none sm:pb-1 sm:text-center">
-            Awerton {new Date().getFullYear()}. All Rights Reserved
+            Awerton {new Date().getFullYear()}. {t.footer.rights}
           </p>
           <div className="sm:text-right">
-            <p className="font-sans text-sm font-normal">Phone Number</p>
+            <p className="font-sans text-sm font-normal">{t.footer.phone}</p>
             <a
               href={PHONE_HREF}
               className="mt-1 block font-sans text-base font-light text-graphite/70 transition hover:text-stone"

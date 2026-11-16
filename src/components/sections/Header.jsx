@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { LANGUAGES, useI18n } from '../../i18n'
 import AwertonMark from '../brand/AwertonMark'
 import AwertonWordmark from '../brand/AwertonWordmark'
 import { ChevronDownIcon, GlobeIcon, MenuIcon } from '../icons'
 import { PillButton } from '../ui'
 
+// Labels come from t.nav[key].
 export const navLinks = [
-  { href: '/services', label: 'Our services' },
-  { href: '/#portfolio', label: 'Cases and objects' },
-  { href: '/#guides', label: 'Guides & tips' },
-  { href: '#contacts', label: 'Contacts' },
+  { href: '/services', key: 'services' },
+  { href: '/#portfolio', key: 'portfolio' },
+  { href: '/guides', key: 'guides' },
+  { href: '#contacts', key: 'contacts' },
 ]
 
 // Scroll distance (px) after which the full bar collapses into the corner dock.
@@ -57,7 +59,74 @@ function useMediaQuery(query) {
   return matches
 }
 
+function LanguageSwitcher() {
+  const { lang, setLang, t } = useI18n()
+  const [open, setOpen] = useState(false)
+  const rootRef = useRef(null)
+  const current = LANGUAGES.find((l) => l.code === lang)
+
+  // Close on outside click or Escape.
+  useEffect(() => {
+    if (!open) return
+    const onPointer = (e) => !rootRef.current?.contains(e.target) && setOpen(false)
+    const onKey = (e) => e.key === 'Escape' && setOpen(false)
+    document.addEventListener('pointerdown', onPointer)
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('pointerdown', onPointer)
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [open])
+
+  return (
+    <div ref={rootRef} className="relative hidden sm:block">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="flex items-center gap-2 font-sans text-base uppercase transition hover:text-gold"
+        aria-label={`${t.header.language}: ${current.label}`}
+        aria-expanded={open}
+        aria-haspopup="true"
+      >
+        <GlobeIcon className="h-[21px] w-[21px]" />
+        {current.short}
+        <ChevronDownIcon
+          className={`h-[9px] w-[17px] transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
+        />
+      </button>
+
+      <ul
+        inert={!open}
+        className={`absolute top-full right-0 mt-3 min-w-[180px] overflow-hidden rounded-md border border-ivory/15 bg-ink/95 py-1.5 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.7)] backdrop-blur-md transition-[opacity,translate] duration-300 ${EASE} ${
+          open ? 'translate-y-0 opacity-100' : 'pointer-events-none -translate-y-1 opacity-0'
+        }`}
+      >
+        {LANGUAGES.map((l) => (
+          <li key={l.code}>
+            <button
+              type="button"
+              lang={l.code}
+              aria-current={l.code === lang ? 'true' : undefined}
+              onClick={() => {
+                setLang(l.code)
+                setOpen(false)
+              }}
+              className={`flex w-full items-center gap-3 px-4 py-2.5 text-left font-sans text-sm transition-colors hover:bg-ivory/8 hover:text-gold ${
+                l.code === lang ? 'text-gold' : 'text-ivory'
+              }`}
+            >
+              <span className="w-6 font-medium">{l.short}</span>
+              <span className="font-light">{l.label}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
 export default function Header() {
+  const { lang, setLang, t } = useI18n()
   const [open, setOpen] = useState(false)
   const isCompactViewport = useMediaQuery(COMPACT_QUERY)
   const pastTop = useScrolled(COLLAPSE_AT)
@@ -86,11 +155,11 @@ export default function Header() {
     // interactive children opt back in.
     // Always fixed. Mobile/tablet collapse into the corner dock; desktop gains a frosted backdrop.
     <header className="pointer-events-none fixed inset-x-0 top-0 z-30 animate-fade-in text-ivory">
-      {/* Frosted backdrop (desktop). Kept on its own layer: backdrop-filter on <header> itself would
-          trap the fixed full-screen menu inside the header box. */}
+      {/* Solid brand-black backdrop (desktop), shown once the page scrolls. Kept on its own layer
+          so it can fade in without affecting the header's children. */}
       <div
         aria-hidden="true"
-        className={`absolute inset-0 -z-10 bg-ink/45 backdrop-blur-xl backdrop-saturate-150 transition-opacity duration-700 ${EASE} ${
+        className={`absolute inset-0 -z-10 bg-ink transition-opacity duration-700 ${EASE} ${
           frosted ? 'pointer-events-auto opacity-100' : 'opacity-0'
         }`}
       />
@@ -101,7 +170,7 @@ export default function Header() {
           <div
             className={`pointer-events-auto -ml-3 flex h-12 items-center justify-self-start rounded-full border px-3 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-700 md:-ml-4 md:px-4 ${EASE} ${
               scrolled
-                ? 'border-ivory/10 bg-ink/70 shadow-[0_12px_32px_-14px_rgba(0,0,0,0.6)] backdrop-blur-md'
+                ? 'border-ivory/10 bg-ink shadow-[0_12px_32px_-14px_rgba(0,0,0,0.6)]'
                 : 'border-transparent bg-transparent shadow-none backdrop-blur-none'
             }`}
           >
@@ -111,22 +180,22 @@ export default function Header() {
               className="flex items-center font-sans text-base uppercase transition-colors hover:text-gold"
               aria-expanded={open}
               aria-controls="site-menu"
-              aria-label="Open menu"
+              aria-label={t.header.openMenu}
             >
               <MenuIcon className="h-[17px] w-5 shrink-0" />
               <span
                 aria-hidden="true"
                 className={`hidden overflow-hidden whitespace-nowrap transition-[max-width,opacity,margin] duration-500 sm:inline-block ${EASE} ${
-                  scrolled ? 'ml-0 max-w-0 opacity-0' : 'ml-3.5 max-w-16 opacity-100 delay-150'
+                  scrolled ? 'ml-0 max-w-0 opacity-0' : 'ml-3.5 max-w-20 opacity-100 delay-150'
                 }`}
               >
-                Menu
+                {t.header.menu}
               </span>
             </button>
 
             <a
               href="/"
-              aria-label="AWERTON — home"
+              aria-label={t.header.home}
               inert={!scrolled}
               className={`group flex items-center overflow-hidden transition-[width,margin,opacity] duration-700 ${EASE} ${
                 scrolled ? 'ml-3.5 w-[22px] opacity-100 delay-100' : 'ml-0 w-0 opacity-0'
@@ -141,25 +210,20 @@ export default function Header() {
             </a>
           </div>
 
-          <a href="/" aria-label="AWERTON — home" inert={scrolled} className={fade('delay-150', 'delay-0')}>
+          <a href="/" aria-label={t.header.home} inert={scrolled} className={fade('delay-150', 'delay-0')}>
             <AwertonWordmark className="h-auto w-[96px] text-ivory min-[400px]:w-[112px] sm:w-[150px]" />
           </a>
 
           <div
             inert={scrolled}
-            className={`flex items-center gap-4 justify-self-end sm:gap-9 ${fade('delay-150', 'delay-0')}`}
+            // z-20 keeps the language dropdown above the nav row it opens over (otherwise the
+            // nav's box swallows clicks on the lower options).
+            className={`relative z-20 flex items-center gap-4 justify-self-end sm:gap-9 ${fade('delay-150', 'delay-0')}`}
           >
-            <button
-              type="button"
-              className="hidden items-center gap-2 font-sans text-base uppercase transition hover:text-gold sm:flex"
-              aria-label="Language: English"
-            >
-              <GlobeIcon className="h-[21px] w-[21px]" />
-              EN
-              <ChevronDownIcon className="h-[9px] w-[17px]" />
-            </button>
+            <LanguageSwitcher />
             <PillButton href="#request" tone="ivory" className="h-10 px-2.5 text-[13px] min-[400px]:px-3 min-[400px]:text-sm sm:h-[46px] sm:px-4 sm:text-base">
-              Contact<span className="hidden min-[400px]:inline">&nbsp;us</span>
+              <span className="min-[400px]:hidden">{t.header.contactShort}</span>
+              <span className="hidden min-[400px]:inline">{t.header.contactLong}</span>
             </PillButton>
           </div>
         </div>
@@ -172,7 +236,7 @@ export default function Header() {
         />
 
         <nav
-          aria-label="Primary"
+          aria-label={t.header.primaryNav}
           inert={scrolled}
           className={`hidden justify-center gap-[33px] pt-[15px] pb-[15px] md:flex ${fade('delay-0', 'delay-150')}`}
         >
@@ -182,7 +246,7 @@ export default function Header() {
               href={link.href}
               className="font-sans text-base font-light uppercase transition hover:text-gold"
             >
-              {link.label}
+              {t.nav[link.key]}
             </a>
           ))}
         </nav>
@@ -193,7 +257,7 @@ export default function Header() {
         id="site-menu"
         role="dialog"
         aria-modal="true"
-        aria-label="Site menu"
+        aria-label={t.header.siteMenu}
         inert={!open}
         className={`fixed inset-0 z-40 flex flex-col bg-ink transition-opacity duration-500 ${
           open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
@@ -205,26 +269,44 @@ export default function Header() {
             onClick={() => setOpen(false)}
             className="font-sans text-base uppercase transition hover:text-gold"
           >
-            Close
+            {t.header.close}
           </button>
           <AwertonMark className="h-[52px] w-auto text-gold" />
           <span className="w-12" />
         </div>
-        <nav aria-label="Menu" className="flex flex-1 flex-col items-center justify-center gap-8">
+        <nav aria-label={t.header.menuNav} className="flex flex-1 flex-col items-center justify-center gap-8">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="font-serif text-3xl uppercase text-ivory transition hover:text-gold md:text-5xl"
+              className="px-5 text-center font-serif text-3xl uppercase text-ivory transition hover:text-gold md:text-5xl"
             >
-              {link.label}
+              {t.nav[link.key]}
             </a>
           ))}
         </nav>
-        <p className="pb-10 text-center font-serif text-sm italic text-ivory/55">
-          Management you can trust. Results you can feel.
-        </p>
+        {/* Language switch for every screen size (the header globe is hidden on phones). */}
+        <div role="group" aria-label={t.header.language} className="flex justify-center gap-2 pb-6">
+          {LANGUAGES.map((l) => (
+            <button
+              key={l.code}
+              type="button"
+              lang={l.code}
+              aria-pressed={l.code === lang}
+              aria-label={l.label}
+              onClick={() => setLang(l.code)}
+              className={`h-10 rounded-full border px-4 font-sans text-sm uppercase transition-colors ${
+                l.code === lang
+                  ? 'border-gold bg-gold text-ink'
+                  : 'border-ivory/30 text-ivory hover:border-gold hover:text-gold'
+              }`}
+            >
+              {l.short}
+            </button>
+          ))}
+        </div>
+        <p className="pb-10 text-center font-serif text-sm italic text-ivory/55">{t.tagline}</p>
       </div>
     </header>
   )

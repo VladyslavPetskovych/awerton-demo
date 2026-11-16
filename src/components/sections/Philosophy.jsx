@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useI18n } from '../../i18n'
 import VideoModal from '../VideoModal'
 import { Eyebrow, PillButton, SectionTitle } from '../ui'
 
@@ -9,6 +10,7 @@ const POSTER = '/images/philosophy-poster.webp'
 const PREVIEW_START = 13.2
 
 export default function Philosophy() {
+  const { t } = useI18n()
   const [videoOpen, setVideoOpen] = useState(false)
   const previewRef = useRef(null)
 
@@ -39,15 +41,13 @@ export default function Philosophy() {
 
       <div className="flex items-center px-5 py-16 md:px-10 lg:py-0 lg:pr-[60px] lg:pl-[clamp(40px,9.8vw,141px)]">
         <div className="max-w-[570px]">
-          <Eyebrow>Opinion</Eyebrow>
-          <SectionTitle className="mt-2.5">Our philosophy</SectionTitle>
+          <Eyebrow>{t.philosophy.eyebrow}</Eyebrow>
+          <SectionTitle className="mt-2.5">{t.philosophy.title}</SectionTitle>
           <p className="mt-[34px] text-base leading-[1.375] opacity-85">
-            AWERTON brings together investment, hospitality and professional management under one
-            vision. We create and develop projects designed to grow in value, deliver strong
-            experiences and remain relevant for years to come.
+            {t.philosophy.text}
           </p>
           <PillButton className="mt-[47px]" onClick={() => setVideoOpen(true)}>
-            View video
+            {t.philosophy.button}
           </PillButton>
         </div>
       </div>

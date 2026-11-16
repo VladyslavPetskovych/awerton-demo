@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
 import Portfolio from '../components/sections/Portfolio'
 import Request from '../components/sections/Request'
 import { SparkleShape } from '../components/icons'
+import { Lines } from '../components/ui'
+import { useDocumentTitle, useI18n } from '../i18n'
 
 /*
  * Services page — built to the "Awerton design (2)" PDF.
@@ -15,6 +16,8 @@ const h2 =
 const body = 'font-sans text-base leading-[22px] font-light'
 
 function ServicesHero() {
+  const { t } = useI18n()
+  const copy = t.services.hero
   return (
     <section id="top" className="relative overflow-hidden bg-[#161515] text-ivory">
       {/* Full-width rule under the header nav (desktop only — the mobile header has its own). */}
@@ -25,23 +28,14 @@ function ServicesHero() {
       <div className="relative pt-[108px] md:pt-[155px] lg:grid lg:grid-cols-[722fr_718fr] lg:pt-[123px]">
         <div className="px-[25px] md:px-10 lg:flex lg:min-h-[758px] lg:items-center lg:pr-10 xl:pl-[60px]">
           <div className="max-w-[526px]">
-            <p className={`${eyebrow} text-white/85`}>Real estate management</p>
+            <p className={`${eyebrow} text-white/85`}>{copy.eyebrow}</p>
             <h1 className="mt-[7px] font-serif text-[42px] leading-[55px] font-normal uppercase lg:mt-[10px] lg:text-[52px]">
-              Professional
-              <br />
-              management
+              <Lines lines={copy.title} />
             </h1>
             <div className={`${body} mt-[18px] space-y-[22px] text-ivory/90 lg:mt-[25px]`}>
-              <p>
-                We manage residential and hospitality real estate with the discipline of an
-                investment firm. Every property in our care runs to clear standards — from
-                tenants and guests to maintenance, compliance and reporting.
-              </p>
-              <p>
-                Our team combines market expertise, hands-on operations and transparent
-                financial control. You keep full ownership and visibility — we handle the
-                day-to-day, so your asset performs and grows in value.
-              </p>
+              {copy.paragraphs.map((text) => (
+                <p key={text}>{text}</p>
+              ))}
             </div>
           </div>
         </div>
@@ -49,7 +43,7 @@ function ServicesHero() {
         <div className="relative mt-[46px] aspect-[430/455] overflow-hidden md:aspect-[16/11] lg:mt-0 lg:aspect-auto">
           <img
             src="/images/services-hero.webp"
-            alt="Lviv old-town rooftops with the Dominican Cathedral dome and Town Hall tower at dusk"
+            alt={copy.imageAlt}
             className="absolute inset-0 h-full w-full animate-fade-in object-cover object-center"
             fetchPriority="high"
           />
@@ -60,6 +54,8 @@ function ServicesHero() {
 }
 
 function Investing() {
+  const { t } = useI18n()
+  const copy = t.services.investing
   return (
     <section className="relative overflow-hidden bg-cream text-charcoal">
       <SparkleShape className="pointer-events-none absolute top-[319px] right-[-19px] w-[88px] text-sparkle/35 lg:top-[47px] lg:right-[-46px] lg:w-[213px]" />
@@ -68,31 +64,24 @@ function Investing() {
       <div className="relative mx-auto max-w-[1440px] px-[25px] pt-[36px] pb-[36px] md:px-10 lg:grid lg:min-h-[803px] lg:grid-cols-[365fr_616fr_365fr] lg:items-center lg:px-[47px] lg:py-[60px]">
         <img
           src="/images/invest-deal.webp"
-          alt="Two business partners shaking hands over a table"
+          alt={copy.dealAlt}
           className="aspect-[380/260] w-full object-cover object-center lg:aspect-[365/260] lg:self-start"
           loading="lazy"
         />
 
         <div className="mt-[43px] lg:mt-0 lg:max-w-[570px] lg:pl-[60px]">
-          <p className={`${eyebrow} text-charcoal/85`}>Investing</p>
-          <h2 className={`${h2} mt-[7px] lg:mt-2`}>Invest with AWERTON</h2>
+          <p className={`${eyebrow} text-charcoal/85`}>{copy.eyebrow}</p>
+          <h2 className={`${h2} mt-[7px] lg:mt-2`}>{copy.title}</h2>
           <div className={`${body} mt-[18px] space-y-4 text-charcoal/85 lg:mt-[26px]`}>
-            <p>
-              Real estate is a long-term commitment. We help investors choose the right
-              properties, structure every acquisition carefully and build portfolios that deliver
-              stable, predictable income.
-            </p>
-            <p>
-              With regular reporting, professional asset management and a clear view of every
-              figure, you always know how your investment is performing — and what we are doing
-              to grow it.
-            </p>
+            {copy.paragraphs.map((text) => (
+              <p key={text}>{text}</p>
+            ))}
           </div>
         </div>
 
         <img
           src="/images/invest-facade.webp"
-          alt="Modern residential building with balconies seen from below"
+          alt={copy.facadeAlt}
           className="mx-auto mt-[47px] aspect-[365/260] w-full max-w-[365px] object-cover object-center lg:mt-0 lg:max-w-none lg:self-end"
           loading="lazy"
         />
@@ -101,37 +90,16 @@ function Investing() {
   )
 }
 
-const services = [
-  {
-    title: 'Real Estate Asset Management',
-    text: 'Day-to-day operations, maintenance, staff and transparent financial reporting — your property runs to clear standards.',
-  },
-  {
-    title: 'Brand Creation',
-    text: 'A distinctive name, visual identity and positioning that set your property apart in the market.',
-  },
-  {
-    title: 'Website Development',
-    text: 'A beautiful, fast website with direct booking that showcases your property and turns visitors into guests.',
-  },
-  {
-    title: 'Rental to Our Clients',
-    text: 'We place your property with our network of vetted tenants and guests, keeping occupancy and income high.',
-  },
-  {
-    title: 'Investment & Acquisition Support',
-    text: 'Consultation, property selection, analysis and legal support at every step of a purchase.',
-  },
-]
-
 function OurServices() {
+  const { t } = useI18n()
+  const copy = t.services.list
   return (
     <section id="services" className="bg-[#0f1111] text-parchment">
       <div className="mx-auto flex max-w-[1440px] flex-col lg:grid lg:grid-cols-[582fr_628fr] lg:gap-x-[110px] lg:px-10 lg:pt-[60px] lg:pb-[80px] xl:px-[60px]">
         <div className="order-2 mt-[43px] lg:order-none lg:mt-0 lg:h-full">
           <img
             src="/images/services-tower.webp"
-            alt="Curved high-rise residential tower with copper-toned balconies"
+            alt={copy.imageAlt}
             className="aspect-[430/498] w-full object-cover object-center md:aspect-[16/11] lg:aspect-auto lg:h-full lg:min-h-[673px]"
             loading="lazy"
           />
@@ -139,17 +107,15 @@ function OurServices() {
 
         <div className="order-1 flex flex-col justify-between px-[25px] pt-[31px] md:px-10 lg:order-none lg:px-0 lg:pt-0">
           <div>
-            <p className={`${eyebrow} text-parchment/85`}>Services</p>
-            <h2 className={`${h2} mt-[7px] text-parchment/85 lg:mt-2`}>Our services</h2>
+            <p className={`${eyebrow} text-parchment/85`}>{copy.eyebrow}</p>
+            <h2 className={`${h2} mt-[7px] text-parchment/85 lg:mt-2`}>{copy.title}</h2>
             <p className={`${body} mt-[18px] max-w-[460px] text-parchment/85 lg:mt-[26px]`}>
-              We take care of everything that makes your property perform — from managing the
-              asset and building its brand to launching its website and filling it with our
-              clients. You own it; we make it work.
+              {copy.text}
             </p>
           </div>
 
           <ol className="mt-[26px] divide-y divide-[#434343] lg:mt-12">
-            {services.map(({ title, text }, i) => (
+            {copy.items.map(({ title, text }, i) => (
               <li
                 key={title}
                 className="group flex items-center gap-6 py-[14px] first:pt-0 last:pb-0 lg:py-[18px]"
@@ -175,9 +141,8 @@ function OurServices() {
 }
 
 export default function ServicesPage() {
-  useEffect(() => {
-    document.title = 'Our services — AWERTON'
-  }, [])
+  const { t } = useI18n()
+  useDocumentTitle(t.meta.services)
 
   return (
     <>

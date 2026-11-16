@@ -6,37 +6,16 @@ import {
   SparkleShape,
   TransactionIcon,
 } from '../icons'
+import { useI18n } from '../../i18n'
 import { Eyebrow, SectionTitle } from '../ui'
 
-const steps = [
-  {
-    icon: ConsultIcon,
-    title: 'Consultation & Understanding',
-    text: 'We begin by understanding your goals, expectations and investment priorities to define the right direction.',
-  },
-  {
-    icon: PropertyIcon,
-    title: 'Property Selection',
-    text: 'We identify carefully selected properties and opportunities that match your objectives, preferences and budget.',
-  },
-  {
-    icon: EvaluationIcon,
-    title: 'Evaluation & Analysis',
-    text: 'Every opportunity is assessed from both investment and practical perspectives to help you make an informed decision.',
-  },
-  {
-    icon: TransactionIcon,
-    title: 'Transaction Support',
-    text: 'We coordinate the process, documentation and key details, ensuring clarity and confidence at every stage.',
-  },
-  {
-    icon: ManagementIcon,
-    title: 'Property Management',
-    text: 'Our involvement continues beyond the transaction. We take care of your property, its performance and day-to-day management.',
-  },
-]
+// Icons in step order; titles and texts come from t.howWeWork.steps.
+const stepIcons = [ConsultIcon, PropertyIcon, EvaluationIcon, TransactionIcon, ManagementIcon]
 
 export default function HowWeWork() {
+  const { t } = useI18n()
+  const steps = t.howWeWork.steps.map((step, i) => ({ ...step, icon: stepIcons[i] }))
+
   return (
     <section id="how-we-work" className="relative overflow-hidden bg-charcoal text-ivory">
       {/* Warm glow + brand sparkle, kept very quiet on the dark ground. */}
@@ -49,11 +28,10 @@ export default function HowWeWork() {
       <div className="container-page relative py-20 lg:pt-24 lg:pb-[104px]">
         <div className="grid gap-14 lg:grid-cols-[504fr_629fr] lg:gap-x-[109px] lg:pr-[78px]">
           <div>
-            <Eyebrow className="text-gold opacity-100">Work</Eyebrow>
-            <SectionTitle className="mt-2.5">How we work</SectionTitle>
+            <Eyebrow className="text-gold opacity-100">{t.howWeWork.eyebrow}</Eyebrow>
+            <SectionTitle className="mt-2.5">{t.howWeWork.title}</SectionTitle>
             <p className="mt-[34px] max-w-[400px] text-base leading-[1.375] text-ivory/70">
-              From the first conversation to long-term management, we make every step clear,
-              thoughtful and effortless.
+              {t.howWeWork.text}
             </p>
 
             <div className="group relative mt-[35px] mr-3 mb-3">
@@ -64,7 +42,7 @@ export default function HowWeWork() {
               <div className="relative overflow-hidden">
                 <img
                   src="/images/how-we-work.webp"
-                  alt="Open balcony doors onto a wrought-iron balcony with a bistro table"
+                  alt={t.howWeWork.imageAlt}
                   className="aspect-[504/620] w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
                   loading="lazy"
                 />

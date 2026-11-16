@@ -1,21 +1,17 @@
-import { SectionTitle } from '../ui'
-
-const phases = [
-  { title: 'Phase 1', text: 'Dominate premium boutique segments in Western Ukraine.' },
-  { title: 'Phase 2', text: 'Consolidate tech infrastructure (Investor CRM & Guest Apps).' },
-  { title: 'Phase 3', text: 'Launch in high-yield European tourist hubs.' },
-]
+import { useI18n } from '../../i18n'
+import { Lines, SectionTitle } from '../ui'
 
 // Positions in the map artwork's own coordinate space (1051 × 788).
 const MAP_W = 1051
 const MAP_H = 788
 const cities = [
-  { name: 'Madrid', x: 191.3, y: 672.5, labelX: 161, labelY: 688 },
-  { name: 'Lviv', x: 724.3, y: 385.5, labelX: 739, labelY: 391 },
+  { key: 'madrid', x: 191.3, y: 672.5, labelX: 161, labelY: 688 },
+  { key: 'lviv', x: 724.3, y: 385.5, labelX: 739, labelY: 391 },
 ]
 const pct = (v, total) => `${(v / total) * 100}%`
 
 function EuropeMap({ className = '' }) {
+  const { t } = useI18n()
   return (
     <div
       className={`relative aspect-[1051/788] ${className}`}
@@ -35,7 +31,7 @@ function EuropeMap({ className = '' }) {
         viewBox={`0 0 ${MAP_W} ${MAP_H}`}
         className="absolute inset-0 h-full w-full"
         role="img"
-        aria-label="Expansion route from Lviv to Madrid"
+        aria-label={t.strategy.mapLabel}
       >
         <path
           d="M194 664C260 543 322 468 401 426C481 384 578 375 714 385"
@@ -45,7 +41,7 @@ function EuropeMap({ className = '' }) {
           strokeLinecap="round"
         />
         {cities.map((c) => (
-          <g key={c.name}>
+          <g key={c.key}>
             <circle cx={c.x} cy={c.y} r="10.5" fill="#3c3535" />
             <circle cx={c.x} cy={c.y} r="5.5" fill="#bcb69c" />
           </g>
@@ -53,11 +49,11 @@ function EuropeMap({ className = '' }) {
       </svg>
       {cities.map((c) => (
         <span
-          key={c.name}
+          key={c.key}
           className="absolute font-sans text-xs font-normal text-ivory md:text-base"
           style={{ left: pct(c.labelX, MAP_W), top: pct(c.labelY, MAP_H) }}
         >
-          {c.name}
+          {t.strategy.cities[c.key]}
         </span>
       ))}
     </div>
@@ -65,20 +61,19 @@ function EuropeMap({ className = '' }) {
 }
 
 export default function Strategy() {
+  const { t } = useI18n()
+  const phases = t.strategy.phases
+
   return (
     <section className="overflow-hidden bg-ink text-ivory">
       <div className="relative mx-auto max-w-[1440px] lg:min-h-[791px]">
         <div className="container-page relative z-10 pt-16 pb-10 lg:pt-[69px] lg:pb-[69px]">
           <div className="max-w-[392px]">
             <SectionTitle>
-              The strategy for
-              <br />
-              European scale
+              <Lines lines={t.strategy.title} />
             </SectionTitle>
             <p className="mt-[27px] text-base leading-[1.375] font-light">
-              Our model was stress-tested and perfected in a highly complex and competitive market.
-              We now possess the operational blueprint, the brand architecture, and the tech stack
-              required to scale internationally.
+              {t.strategy.text}
             </p>
 
             <ol className="mt-12 lg:mt-[99px]">

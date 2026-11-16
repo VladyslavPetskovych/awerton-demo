@@ -106,7 +106,7 @@
   margin-inline: auto;
   width: 100%;
   max-width: 1440px;
-  padding-inline: 20px;
+  padding-inline: 25px; /* mobile frames: 25px gutters */
   @media (width >= 48rem) {
     padding-inline: 40px;
   }

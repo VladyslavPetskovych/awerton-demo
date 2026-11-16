@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
+import { useI18n } from '../i18n'
 
 export default function VideoModal({ src, poster, open, onClose }) {
+  const { t } = useI18n()
   const closeRef = useRef(null)
 
   useEffect(() => {
@@ -21,7 +23,7 @@ export default function VideoModal({ src, poster, open, onClose }) {
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="Video"
+      aria-label={t.common.video}
       className="fixed inset-0 z-50 flex animate-fade-in items-center justify-center bg-ink/90 p-4 backdrop-blur-sm"
       onClick={onClose}
     >
@@ -31,7 +33,7 @@ export default function VideoModal({ src, poster, open, onClose }) {
         onClick={onClose}
         className="absolute top-5 right-5 font-sans text-sm uppercase tracking-widest text-ivory transition hover:text-gold"
       >
-        Close
+        {t.common.close}
       </button>
       <video
         className="max-h-[88vh] w-auto max-w-full rounded-md bg-black"

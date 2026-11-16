@@ -1,6 +1,8 @@
+import { useI18n } from '../../i18n'
 import AwertonMark from '../brand/AwertonMark'
 
 export default function Hero() {
+  const { t } = useI18n()
   return (
     <section id="top" className="relative h-[100svh] max-h-[800px] min-h-[600px] overflow-hidden bg-ink text-ivory">
       <video
@@ -28,19 +30,18 @@ export default function Hero() {
             className="mt-7 max-w-[490px] animate-fade-up font-sans text-base leading-[1.375] font-light text-ivory"
             style={{ animationDelay: '0.2s' }}
           >
-            AWERTON is a modern home for investing and business management. Join the list to be the
-            first through the door.
+            {t.hero.text}
           </p>
         </div>
 
         <div className="animate-fade-up pb-[43px]" style={{ animationDelay: '0.35s' }}>
           <div className="flex items-center justify-center gap-2">
             <span className="h-px w-11 bg-ivory/80" />
-            <span className="font-sans text-sm tracking-[0.2em] uppercase">Est. 2013</span>
+            <span className="font-sans text-sm tracking-[0.2em] uppercase">{t.hero.established}</span>
             <span className="h-px w-11 bg-ivory/80" />
           </div>
           <p className="mt-6 font-serif text-base text-ivory">
-            Management you can trust. Results you can feel.
+            {t.tagline}
           </p>
         </div>
       </div>
