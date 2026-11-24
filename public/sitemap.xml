@@ -51,6 +51,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://awerton.com/contacts</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://awerton.com/contacts" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://awerton.com/en/contacts" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://awerton.com/contacts" />
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://awerton.com/en/contacts</loc>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://awerton.com/contacts" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://awerton.com/en/contacts" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://awerton.com/contacts" />
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://awerton.com/portfolio/aristo</loc>
     <xhtml:link rel="alternate" hreflang="uk" href="https://awerton.com/portfolio/aristo" />
     <xhtml:link rel="alternate" hreflang="en" href="https://awerton.com/en/portfolio/aristo" />

@@ -214,9 +214,27 @@
   }
 }
 
+/* Horizontal rails that scroll without a visible scrollbar. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Anchor jumps (/#portfolio, #request …) stop below the fixed header instead of under it:
+     the corner dock on phones/tablets, the full 131px bar on desktop. */
+  section[id],
+  footer[id] {
+    scroll-margin-top: 64px;
+    @media (width >= 64rem) {
+      scroll-margin-top: 131px;
+    }
   }
 
   body {

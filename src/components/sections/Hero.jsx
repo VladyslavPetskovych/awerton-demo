@@ -23,7 +23,8 @@ export default function Hero() {
 
       <div className="relative z-10 flex h-full flex-col items-center px-5 text-center">
         <div className="flex flex-1 flex-col items-center justify-center pt-24">
-          <h1 className="animate-fade-up" style={{ animationDelay: '0.05s' }}>
+          {/* data-preloader-target: the loading screen's 3D crystal lands exactly on this mark (index.html). */}
+          <h1 className="animate-fade-up" style={{ animationDelay: '0.05s' }} data-preloader-target="">
             <span className="sr-only">AWERTON</span>
             <AwertonMark className="h-[120px] w-auto text-gold md:h-[150px]" aria-hidden="true" />
           </h1>

@@ -11,6 +11,7 @@ import Request from './components/sections/Request'
 import Footer from './components/sections/Footer'
 import ServicesPage from './pages/ServicesPage'
 import GuidesPage from './pages/GuidesPage'
+import ContactsPage from './pages/ContactsPage'
 import PropertyPage from './pages/PropertyPage'
 import { propertyBySlug } from './content/portfolio'
 import { parseLocation, useDocumentTitle, useI18n } from './i18n'
@@ -39,6 +40,7 @@ const routes = {
   '/': HomePage,
   '/services': ServicesPage,
   '/guides': GuidesPage,
+  '/contacts': ContactsPage,
 }
 
 export default function App() {

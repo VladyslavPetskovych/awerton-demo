@@ -10,7 +10,7 @@ export const navLinks = [
   { href: '/services', key: 'services' },
   { href: '/#portfolio', key: 'portfolio' },
   { href: '/guides', key: 'guides' },
-  { href: '#contacts', key: 'contacts' },
+  { href: '/contacts', key: 'contacts' },
 ]
 
 // Scroll distance (px) after which the full bar collapses into the corner dock.

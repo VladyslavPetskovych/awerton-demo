@@ -168,3 +168,21 @@ export function GlobeLineIcon(props) {
     </svg>
   )
 }
+
+export function ClockIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <circle cx="12" cy="12" r="8.75" />
+      <path d="M12 7v5l3.25 2" />
+    </svg>
+  )
+}
+
+export function PinIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+      <path d="M19 10.2c0 5.1-7 10.55-7 10.55S5 15.3 5 10.2a7 7 0 0 1 14 0Z" />
+      <circle cx="12" cy="10.2" r="2.6" />
+    </svg>
+  )
+}

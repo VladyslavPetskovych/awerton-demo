@@ -8,3 +8,7 @@ export const PHONE_HREF = 'tel:+380776970000'
 // Callback requests are delivered to EMAIL via FormSubmit (no backend needed).
 // The very first submission triggers a one-time activation email to EMAIL.
 export const REQUEST_ENDPOINT = `https://formsubmit.co/ajax/${EMAIL}`
+
+// Office shown on /contacts. The visible address text lives in src/i18n (contacts.info);
+// this query only centres the embedded map. Placeholder until the real office is confirmed.
+export const OFFICE_MAP_QUERY = 'Rynok Square, Lviv, Ukraine'
